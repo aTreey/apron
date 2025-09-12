@@ -7,7 +7,7 @@
 
 - Consultation Agent：需求沟通
 - Blueprint Agent：行程规划
-- Engineering Agent：地图生成
+- Engineering Agent：专属地图生成
 - Presentation Agent：网页交付
 - Deployment Agent：部署网站 Agent
 
@@ -99,12 +99,12 @@ flowchart TD
 
 - **设计风格**: 
   - **必须严格参考 `https://a.amap.com/jsapi_demo_show/static/feitian_data_view/kmTravel.html` 的设计风格和代码结构**。
-  - 页面主色调为蓝色 (`#3665ff`)，大量使用圆角和阴影营造现代感。
+  - 页面主色调需要清新自然，大量使用圆角和阴影营造现代感。
 
 - **页面结构与内容**: 
-  - **Header**: 包含主副标题，使用蓝色渐变背景。
-  - **Weather Section**: **必须包含**天气预报模块。由于无法获取实时天气，需使用合理的**占位数据**。
-  - **Tips Section**: **必须包含**“旅行小贴士”模块，提供穿衣、交通等实用建议。
+  - **Header**: 包含主副标题，使用渐变背景。
+  - **Weather Section**: **必须包含**天气预报模块 **占位数据**。
+  - **Tips Section**: **必须包含**“旅行小贴士”模块，提供穿衣、交通，必备物品等实用建议。
   - **Map Section**: 
     - **必须包含**一个由高德地图JS API驱动的**交互式地图** (`<div id="container"></div>`)，并在地图上用标记（Marker）和折线（Polyline）清晰地展示每日路线。
     - 在地图下方，提供“一键在App中打开”的按钮和二维码，两者都链接到 `Engineering Agent` 生成的MCP链接。

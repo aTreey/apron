@@ -3,327 +3,203 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>东北内蒙秋色环线8日自驾游</title>
+    <title>G331呼伦贝尔7日多彩环线游</title>
     <script src="https://webapi.amap.com/maps?v=2.0&key=98a9b1aede875554fc1957f1026b327a"></script>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: "PingFang SC", "Microsoft YaHei", sans-serif;
+        :root {
+            --theme-bg: #f8f9fa;
+            --theme-card-bg: #ffffff;
+            --theme-text-primary: #212529;
+            --theme-text-secondary: #6c757d;
+            --theme-accent: #007bff;
+            --theme-header: linear-gradient(135deg, #667eea, #764ba2);
+            --day1-color: #ff6b6b; --day2-color: #fca311; --day3-color: #fdec51; 
+            --day4-color: #4caf50; --day5-color: #2196f3; --day6-color: #3f51b5; --day7-color: #9c27b0;
         }
-        body {
-            background-color: #f5f7fa;
-            color: #333;
-            line-height: 1.6;
-        }
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+        body { background-color: var(--theme-bg); color: var(--theme-text-primary); line-height: 1.6; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
         header {
-            text-align: center;
-            margin-bottom: 30px;
-            padding: 30px 20px;
-            background: linear-gradient(135deg, #1e9cff, #3665ff);
-            color: white;
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            text-align: center; margin-bottom: 30px; padding: 30px 20px;
+            background: var(--theme-header); color: white;
+            border-radius: 12px; box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
         }
-        header h1 {
-            font-size: 2.8rem;
-            margin-bottom: 10px;
+        header h1 { font-size: 2.6rem; margin-bottom: 10px; }
+        header p { font-size: 1.2rem; opacity: 0.9; }
+        .map-section, .day-container {
+            background-color: var(--theme-card-bg); padding: 25px; border-radius: 12px;
+            margin-bottom: 30px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.06);
+            border: 1px solid #dee2e6;
         }
-        header p {
-            font-size: 1.3rem;
-            opacity: 0.9;
-        }
-        .tips-section, .map-section, .day-container, .weather-section {
-            background-color: white;
-            padding: 25px;
-            border-radius: 10px;
-            margin-bottom: 30px;
-            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
-        }
-        .section-title {
-            font-size: 1.8rem;
-            margin-bottom: 20px;
-            color: #3665ff;
-            border-bottom: 2px solid #f0f0f0;
-            padding-bottom: 15px;
-        }
-        .weather-cards {
-            display: flex;
-            justify-content: space-around;
-            flex-wrap: wrap;
-            gap: 15px;
-        }
-        .weather-card {
-            flex: 1;
-            min-width: 150px;
-            background: linear-gradient(to bottom, #f9f9f9, #f0f0f0);
-            padding: 15px;
-            border-radius: 8px;
-            text-align: center;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
-        }
-        .weather-card h3 { margin-bottom: 10px; color: #3665ff; }
-        .weather-icon { font-size: 2rem; margin: 10px 0; }
-        .temp { font-size: 1.2rem; font-weight: bold; }
-        .tips-content ul { padding-left: 20px; }
-        .tips-content li { margin-bottom: 12px; font-size: 1.1rem; }
-        
-        .map-layout-wrapper {
-            display: flex;
-            gap: 25px;
-        }
+        .section-title { font-size: 1.6rem; margin-bottom: 20px; color: var(--theme-accent); border-bottom: 1px solid #e9ecef; padding-bottom: 15px; }
+        .map-layout-wrapper { display: flex; gap: 25px; }
         .map-sidebar {
-            flex: 0 0 240px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            gap: 20px;
-            background-color: #f9f9f9;
-            border-radius: 8px;
-            padding: 20px;
+            flex: 0 0 240px; display: flex; flex-direction: column; justify-content: center;
+            align-items: center; gap: 20px; background-color: #f8f9fa; border-radius: 10px; padding: 20px;
         }
-        .map-container {
-            flex: 1;
-            min-height: 500px;
-            border-radius: 8px;
-            overflow: hidden;
+        .map-container-wrapper { flex: 1; position: relative; }
+        .map-container { width: 100%; min-height: 550px; border-radius: 10px; overflow: hidden; }
+        .map-legend {
+            position: absolute; bottom: 10px; left: 10px; background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(4px); padding: 10px; border-radius: 8px; z-index: 1000; 
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15); font-size: 12px;
         }
-
-        .action-group {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            width: 100%;
-        }
-        .action-label { margin-top: 10px; font-size: 0.9rem; color: #666; text-align: center;}
-        
+        .legend-title { font-weight: bold; margin-bottom: 8px; font-size: 13px; color: var(--theme-accent); }
+        .legend-item { display: flex; align-items: center; margin-bottom: 6px; }
+        .legend-color { width: 16px; height: 16px; border-radius: 4px; margin-right: 8px; }
+        .action-group { display: flex; flex-direction: column; align-items: center; width: 100%; }
+        .action-label { margin-top: 8px; font-size: 0.8rem; color: var(--theme-text-secondary); text-align: center;}
         .map-btn-primary {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            background: linear-gradient(135deg, #ff9900, #ff6600);
-            color: white;
-            padding: 15px 25px;
-            border-radius: 8px;
-            text-decoration: none;
-            font-weight: bold;
-            font-size: 1.1rem;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-            transition: transform 0.2s, box-shadow 0.2s;
-            text-align: center;
-            width: 100%;
+            display: flex; align-items: center; justify-content: center; gap: 10px; 
+            background: var(--theme-accent); color: white; padding: 12px 20px;
+            border-radius: 8px; text-decoration: none; font-weight: bold; font-size: 1rem;
+            transition: opacity 0.2s; text-align: center; width: 100%;
         }
-        .map-btn-primary:hover { 
-            transform: scale(1.05);
-            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+        .map-btn-primary:hover { opacity: 0.85; }
+        .qr-code-container { margin-top: 15px; padding: 8px; background: white; border-radius: 8px; }
+        #qr-code-img { width: 140px; height: 140px; }
+        .day-header { background: var(--theme-header); color: white; padding: 18px; font-size: 1.4rem; margin: -25px -25px 20px -25px; border-top-left-radius: 12px; border-top-right-radius: 12px; }
+        .day-summary {
+            display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 15px;
+            padding: 15px; background-color: #f8f9fa; border-radius: 8px; margin-bottom: 20px;
         }
-
-        .qr-code-container { 
-            margin-top: 20px;
-            padding: 10px; 
-            background: white; 
-            border-radius: 10px; 
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); 
+        .summary-item { display: flex; align-items: center; gap: 10px; font-size: 0.9rem; }
+        .summary-item-icon { font-size: 1.2rem; color: var(--theme-accent); }
+        .spot-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; }
+        .spot-card {
+            background-color: #f8f9fa; border-radius: 10px; overflow: hidden; border: 1px solid #e9ecef;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
-        .day-header { background: linear-gradient(135deg, #36b5ff, #3665ff); color: white; padding: 20px; font-size: 1.5rem; margin: -25px -25px 20px -25px; border-top-left-radius: 10px; border-top-right-radius: 10px; }
-        .day-content { padding: 5px; }
-        .day-content > p { font-size: 1.1rem; margin-bottom: 20px; }
-        .spot-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
-        .spot-card { background-color: #f9f9f9; border-radius: 8px; overflow: hidden; box-shadow: 0 3px 8px rgba(0, 0, 0, 0.08); transition: transform 0.3s, box-shadow 0.3s; }
-        .spot-card:hover { transform: translateY(-5px); box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1); }
-        .spot-img { width: 100%; height: 180px; object-fit: cover; background-color: #e9ecef; }
-        .spot-info { padding: 20px; }
-        .spot-name { font-size: 1.3rem; font-weight: bold; margin-bottom: 10px; color: #3665ff; }
-        .spot-desc { font-size: 1rem; color: #666; }
-        .transportation {
-            flex-direction: row;
-            margin: 20px 0;
-            padding: 15px;
-            background-color: #f5f7fa;
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
+        .spot-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.12);
         }
-        .transportation-icon { font-size: 1.5rem; margin-right: 15px; color: #3665ff; }
-        footer { text-align: center; padding: 30px 20px; color: #888; font-size: 1rem; }
-
-        @media (max-width: 768px) {
-            .map-layout-wrapper {
-                flex-direction: column;
-            }
-            .map-sidebar {
-                flex-direction: row;
-                justify-content: space-around;
-                flex: 1;
-            }
+        .spot-img { width: 100%; height: 170px; object-fit: cover; background-color: #dee2e6; }
+        .spot-info { padding: 15px; }
+        .spot-name { font-size: 1.2rem; font-weight: bold; margin-bottom: 8px; color: var(--theme-accent); }
+        .spot-meta { font-size: 0.9rem; color: var(--theme-text-secondary); }
+        .custom-marker {
+            color: white; border-radius: 50%; width: 26px; height: 26px; font-size: 13px;
+            font-weight: bold; text-align: center; line-height: 26px; border: 2px solid white;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.4);
         }
+        footer { text-align: center; padding: 30px 20px; color: #6c757d; font-size: 0.9rem; }
     </style>
 </head>
 <body>
     <div class="container">
         <header>
-            <h1>东北内蒙秋色环线8日自驾游</h1>
-            <p>穿越大兴安岭与呼伦贝尔草原的壮丽史诗</p>
+            <h1>G331呼伦贝尔7日多彩环线游</h1>
+            <p>从鹤城出发，开启一场森林、草原与边境的寻梦之旅</p>
         </header>
-
-        <!-- Weather and Tips sections -->
-        <section class="weather-section">
-            <h2 class="section-title">国庆期间天气参考</h2>
-            <div class="weather-cards">
-                <div class="weather-card"><h3>齐齐哈尔</h3><div class="weather-icon">☀️</div><p>晴/多云</p><p class="temp">15°C/3°C</p></div>
-                <div class="weather-card"><h3>根河</h3><div class="weather-icon">🌤️</div><p>多云/小雪</p><p class="temp">5°C/-5°C</p></div>
-                <div class="weather-card"><h3>满洲里</h3><div class="weather-icon">☀️</div><p>晴</p><p class="temp">12°C/0°C</p></div>
-                <div class="weather-card"><h3>海拉尔</h3><div class="weather-icon">🌤️</div><p>多云</p><p class="temp">13°C/1°C</p></div>
-            </div>
-        </section>
-        <section class="tips-section">
-            <h2 class="section-title">旅行小贴士</h2>
-            <div class="tips-content"><ul><li><strong>保暖第一</strong>：十一期间，内蒙及大兴安岭地区气温较低，早晚温差大，务必带足羽绒服、保暖内衣、帽子、手套等防寒衣物。</li><li><strong>车辆检查</strong>：全程自驾距离长，出发前请务必检查车况，包括轮胎、机油、刹车等。</li><li><strong>路况须知</strong>：边防公路（卡线）风景绝美，但部分路段可能为砂石路，请谨慎驾驶。</li><li><strong>饮食特色</strong>：尽情享用东北铁锅炖、俄式西餐、内蒙手把肉和火锅。</li><li><strong>保持联系</strong>：林区和草原深处部分区域手机信号可能较弱，建议提前下载好离线地图。</li></ul></div>
-        </section>
 
         <section class="map-section">
             <h2 class="section-title">路线总览地图</h2>
             <div class="map-layout-wrapper">
                 <div class="map-sidebar">
                     <div class="action-group">
-                        <a href="#" class="map-btn-primary" id="smart-map-btn"><span>📍</span> 查看专属路线</a>
-                        <div class="action-label">智能判断设备，打开地图</div>
+                        <a href="#" class="map-btn-primary" id="smart-map-btn"><span>📍</span> 在App中打开专属地图</a>
+                        <div class="action-label">智能判断设备，打开高德地图</div>
                     </div>
                     <div class="qr-code-container">
                         <img id="qr-code-img" src="" alt="地图二维码">
-                        <div class="action-label" style="margin-top: 5px;">手机扫码</div>
+                        <div class="action-label" style="margin-top: 5px;">手机扫码，体验更佳</div>
                     </div>
                 </div>
-                <div class="map-container" id="container"></div>
+                <div class="map-container-wrapper">
+                    <div class="map-container" id="container"></div>
+                    <div class="map-legend" id="map-legend">
+                        <h3 class="legend-title">每日路线</h3>
+                    </div>
+                </div>
             </div>
         </section>
 
-        <!-- Itinerary sections -->
-        <section class="itinerary-section">
-            <div class="day-container">
-                <div class="day-header">Day 1: 北京 → 齐齐哈尔</div>
-                <div class="day-content"><p>抵达“鹤城”齐齐哈尔，提取座驾，为北国之旅做好准备。</p>
-                    <div class="spot-cards">
-                        <div class="spot-card"><img src="https://www.loongwander.com/wp-content/uploads/2022/12/zhalong-national-nature-reserve-02.jpg" alt="扎龙自然保护区" class="spot-img"><div class="spot-info"><h3 class="spot-name">扎龙自然保护区</h3><p class="spot-desc">如果抵达时间早，可以前去观赏丹顶鹤的优美身姿。</p></div></div>
-                        <div class="spot-card"><img src="http://store.is.autonavi.com/showpic/051ff6d24a6c2cf491aa696d4aa54249" alt="齐市美食" class="spot-img"><div class="spot-info"><h3 class="spot-name">齐市美食初探</h3><p class="spot-desc">晚上品尝地道的齐市烧烤，如马家烤肉、红旗烤肉。</p></div></div>
-                    </div>
-                    <div class="transportation"><div class="transportation-icon">🚕</div><div><h3>交通提示</h3><p>在齐齐哈尔站提车后，驾车前往市区酒店。</p></div></div>
-                </div>
-            </div>
-            <div class="day-container">
-                <div class="day-header">Day 2: 齐齐哈尔 → 根河市</div>
-                <div class="day-content"><p>今日长途奔袭，一路向北，见证风景从黑土地向无垠林海的壮丽过渡。</p>
-                    <div class="spot-cards"><div class="spot-card"><img src="https://aos-comment.amap.com/B01D600WUL/comment/74AC9427_810D_4FC8_860C_491EA4D277DE_L0_001_2000_1334_1743161951215_90922048.jpg" alt="在路上" class="spot-img"><div class="spot-info"><h3 class="spot-name">在路上</h3><p class="spot-desc">纯粹的公路旅行日。可在甘南县或阿荣旗等沿途城镇稍作休整。</p></div></div></div>
-                    <div class="transportation"><div class="transportation-icon">🚗</div><div><h3>交通提示</h3><p>全程约650公里，预计驾驶8-9小时，请合理安排出发时间。</p></div></div>
-                </div>
-            </div>
-            <div class="day-container">
-                <div class="day-header">Day 3: 根河 → 莫尔道嘎</div>
-                <div class="day-content"><p>探访中国最后的使鹿部落，随后一头扎进大兴安岭最精华的秋色心脏。</p>
-                    <div class="spot-cards">
-                        <div class="spot-card"><img src="http://store.is.autonavi.com/showpic/00cd191cd7fa18108e15a8eef346affa" alt="敖鲁古雅" class="spot-img"><div class="spot-info"><h3 class="spot-name">敖鲁古雅使鹿部落</h3><p class="spot-desc">与温顺的驯鹿亲密接触，了解鄂温克族的独特文化。</p></div></div>
-                        <div class="spot-card"><img src="http://store.is.autonavi.com/showpic/66eb99165c30187301473bffb6ebe1ac" alt="莫尔道嘎" class="spot-img"><div class="spot-info"><h3 class="spot-name">莫尔道嘎国家森林公园</h3><p class="spot-desc">深入公园，寻找“白鹿岛”的绝美风光，体验林海穿梭。</p></div></div>
-                    </div>
-                </div>
-            </div>
-            <div class="day-container">
-                <div class="day-header">Day 4: 莫尔道嘎 → 额尔古纳</div>
-                <div class="day-content"><p>行驶在风景如画的边防公路上，一侧是界河，对岸是俄罗斯。</p>
-                    <div class="spot-cards">
-                        <div class="spot-card"><img src="https://www.cdyzct.com/zb_users/upload/2022/09/202209081662624219153999.jpg" alt="边防公路" class="spot-img"><div class="spot-info"><h3 class="spot-name">边防公路 (卡线)</h3><p class="spot-desc">沿额尔古纳河蜿蜒前行，留意【老鹰嘴】和【月亮泡子】。</p></div></div>
-                        <div class="spot-card"><img src="https://aos-comment.amap.com/B01D601KPF/comment/600a99f2f50e9b1a5cc88d758092454c_2048_2048_80.jpg" alt="室韦" class="spot-img"><div class="spot-info"><h3 class="spot-name">室韦/临江</h3><p class="spot-desc">选择一个中俄边境小镇午餐，感受独特的木刻楞建筑。</p></div></div>
-                        <div class="spot-card"><img src="https://aos-comment.amap.com/B01D600WWT/comment/fcc10d02cea019a7e10a3955c11581b1_2048_2048_80.jpg" alt="额尔古纳湿地" class="spot-img"><div class="spot-info"><h3 class="spot-name">额尔古纳湿地</h3><p class="spot-desc">在日落时分登上观景台，欣赏亚洲第一湿地的五彩画卷。</p></div></div>
-                    </div>
-                </div>
-            </div>
-            <div class="day-container">
-                <div class="day-header">Day 5: 额尔古纳 → 满洲里</div>
-                <div class="day-content"><p>从湿地到草原，驰骋在最美草原公路上，最终抵达异域风情的边境明珠。</p>
-                    <div class="spot-cards">
-                        <div class="spot-card"><img src="https://pic.ctrip.com/stream/gaopai/CggYjGVfeL-AEvGzABRkQ-T2a_w052_1200_675.jpg" alt="黑山头骑马" class="spot-img"><div class="spot-info"><h3 class="spot-name">黑山头骑马</h3><p class="spot-desc">在黑山头镇体验一次草原策马奔腾，欣赏壮丽的草原日落。</p></div></div>
-                        <div class="spot-card"><img src="https://aos-comment.amap.com/B01D60NCRC/comment/content_media_external_images_media_100001729_1733881666225_75052673.jpg" alt="满洲里" class="spot-img"><div class="spot-info"><h3 class="spot-name">满洲里夜景</h3><p class="spot-desc">欣赏这座边境城市的童话般夜景，参观宏伟的【套娃广场】。</p></div></div>
-                    </div>
-                </div>
-            </div>
-            <div class="day-container">
-                <div class="day-header">Day 6: 满洲里 → 海拉尔</div>
-                <div class="day-content"><p>感受国门的庄严，拥抱北方第一大湖，最后抵达草原之都海拉尔。</p>
-                    <div class="spot-cards">
-                        <div class="spot-card"><img src="https://youimg1.c-ctrip.com/target/100h0d0000006r0crE1A0_C_750_350.jpg" alt="国门景区" class="spot-img"><div class="spot-info"><h3 class="spot-name">国门景区</h3><p class="spot-desc">站在雄伟的国门之下，感受边境的庄严与神圣。</p></div></div>
-                        <div class="spot-card"><img src="http://store.is.autonavi.com/showpic/211af6e08f5d1b0f19dbe66ecb9876a7" alt="呼伦湖" class="spot-img"><div class="spot-info"><h3 class="spot-name">呼伦湖</h3><p class="spot-desc">感受“北方第一大泽”的烟波浩渺与壮阔。</p></div></div>
-                        <div class="spot-card"><img src="https://aos-comment.amap.com/B01D600WR7/comment/content_media_external_images_media_1469_1736567111152_79798935.jpg" alt="海拉尔" class="spot-img"><div class="spot-info"><h3 class="spot-name">海拉尔休整</h3><p class="spot-desc">抵达海拉尔后，可参观【呼伦贝尔民族博物院】。</p></div></div>
-                    </div>
-                </div>
-            </div>
-            <div class="day-container">
-                <div class="day-header">Day 7: 海拉尔 → 乌兰浩特</div>
-                <div class="day-content"><p>从呼伦贝尔南下，穿越科尔沁草原，前往内蒙古东部的“红色之城”。</p>
-                    <div class="spot-cards">
-                        <div class="spot-card"><img src="https://aos-comment.amap.com/B01E200GR8/comment/content_media_external_images_media_100002199_1739900320115_79437564.jpg" alt="成吉思汗庙" class="spot-img"><div class="spot-info"><h3 class="spot-name">成吉思汗庙</h3><p class="spot-desc">内蒙古地区最大的成吉思汗纪念庙宇，建筑风格宏伟。</p></div></div>
-                        <div class="spot-card"><img src="https://n.sinaimg.cn/sinakd20201128s/298/w690h408/20201128/0876-kentcvy9843931.jpg" alt="五一会址" class="spot-img"><div class="spot-info"><h3 class="spot-name">五一会址</h3><p class="spot-desc">了解内蒙古自治区的诞生历史，感受这座城市的红色印记。</p></div></div>
-                    </div>
-                </div>
-            </div>
-            <div class="day-container">
-                <div class="day-header">Day 8: 乌兰浩特 → 齐齐哈尔 → 北京</div>
-                <div class="day-content"><p>结束完美的东北内蒙大环线之旅，踏上归途。</p>
-                    <div class="spot-cards"><div class="spot-card"><img src="http://store.is.autonavi.com/showpic/051ff6d24a6c2cf491aa696d4aa54249" alt="归途" class="spot-img"><div class="spot-info"><h3 class="spot-name">归程</h3><p class="spot-desc">从乌兰浩特驾车返回齐齐哈尔还车，乘坐火车返回北京。</p></div></div></div>
-                </div>
-            </div>
+        <section class="itinerary-section" id="itinerary-section">
+            <!-- Itinerary content will be generated by JS -->
         </section>
 
         <footer>
-            <p>© 2025 AI 旅行规划师 | 制作时间: 2025年9月12日</p>
+            <p>© 2025 Presentation Agent | 多彩主题</p>
         </footer>
     </div>
 
     <script>
         window.onload = function () {
-            const points = {
-                '齐齐哈尔': { pos: [123.918193, 47.354892], day: 1 },
-                '根河': { pos: [121.520165, 50.779758], day: 2 },
-                '莫尔道嘎': { pos: [120.785747, 51.255782], day: 3 },
-                '额尔古纳': { pos: [120.180506, 50.243102], day: 4 },
-                '满洲里': { pos: [117.379134, 49.598620], day: 5 },
-                '海拉尔': { pos: [119.824542, 49.234715], day: 6 },
-                '乌兰浩特': { pos: [122.093309, 46.072233], day: 7 }
+            const finalItinerary = {
+                exclusiveMapUrl: "amapuri://workInAmap/createWithToken?polymericId=mcp_17cb1a9e198245c8bd549c4da0c56863&from=MCP",
+                dailyRoutes: [
+                    { day: 1, title: '齐齐哈尔 → 柴河', totalDuration: '约 5小时5分钟', color: '#ff6b6b', points: [ { name: '齐齐哈尔站', coord: [123.995988, 47.340409], img: 'https://aos-comment.amap.com/B01C400C81/comment/174643715413_1746437170552_05316738.jpg', duration: '起点' }, { name: '柴河月亮小镇', coord: [121.30699, 47.55696], img: 'http://store.is.autonavi.com/showpic/34710f1030238ce3bc64f3d3442d1ce0', duration: '约 5小时5分钟' } ], hotel: { name: '柴河月亮天池酒店', address: '柴河镇月亮天池景区' } },
+                    { day: 2, title: '柴河 → 阿尔山', totalDuration: '约 1小时51分钟', color: '#fca311', points: [ { name: '柴河月亮小镇', coord: [121.30699, 47.55696], img: 'http://store.is.autonavi.com/showpic/34710f1030238ce3bc64f3d3442d1ce0', duration: '起点' }, { name: '阿尔山国家森林公园', coord: [120.421996, 47.284044], img: 'http://store.is.autonavi.com/showpic/e3cdeea5740d0f0ca054e3db2130ac2c', duration: '约 1小时51分钟' } ], hotel: { name: '阿尔山天池度假酒店', address: '国家森林公园内' } },
+                    { day: 3, title: '阿尔山 → 满洲里', totalDuration: '约 6小时1分钟', color: '#fdec51', points: [ { name: '阿尔山', coord: [120.421996, 47.284044], img: 'http://store.is.autonavi.com/showpic/e3cdeea5740d0f0ca054e3db2130ac2c', duration: '起点' }, { name: '满洲里市', coord: [117.379134, 49.59862], img: 'https://aos-comment.amap.com/B01D60NCRC/comment/content_media_external_images_media_100001729_1733881666225_75052673.jpg', duration: '约 6小时1分钟' } ], hotel: { name: '满洲里友谊宾馆', address: '一道街26号' } },
+                    { day: 4, title: '满洲里 → 室韦', totalDuration: '约 6小时49分钟', color: '#4caf50', points: [ { name: '满洲里', coord: [117.379134, 49.59862], img: 'https://aos-comment.amap.com/B01D60NCRC/comment/content_media_external_images_media_100001729_1733881666225_75052673.jpg', duration: '起点' }, { name: '额尔古纳河乌兰山景区', coord: [119.451961, 50.603812], img: 'http://store.is.autonavi.com/showpic/390aa13837a38455b8f34e6f445a1c2f', duration: '约 4小时56分钟' }, { name: '中国室韦口岸', coord: [119.895746, 51.334108], img: 'https://aos-comment.amap.com/B01D601KPF/comment/600a99f2f50e9b1a5cc88d758092454c_2048_2048_80.jpg', duration: '约 1小时53分钟' } ], hotel: { name: '室韦临江蓝莓庄园', address: '临江屯' } },
+                    { day: 5, title: '室韦 → 根河', totalDuration: '约 3小时11分钟', color: '#2196f3', points: [ { name: '中国室韦口岸', coord: [119.895746, 51.334108], img: 'https://aos-comment.amap.com/B01D601KPF/comment/600a99f2f50e9b1a5cc88d758092454c_2048_2048_80.jpg', duration: '起点' }, { name: '莫尔道嘎镇', coord: [120.785747, 51.255782], img: 'http://store.is.autonavi.com/showpic/66eb99165c30187301473bffb6ebe1ac', duration: '约 1小时24分钟' }, { name: '根河市', coord: [121.520165, 50.779758], img: 'https://aos-comment.amap.com/B01D600WUL/comment/74AC9427_810D_4FC8_860C_491EA4D277DE_L0_001_2000_1334_1743161951215_90922048.jpg', duration: '约 1小时47分钟' } ], hotel: { name: '根河宾馆', address: '中央街根阳桥西' } },
+                    { day: 6, title: '根河 → 海拉尔', totalDuration: '约 3小时55分钟', color: '#3f51b5', points: [ { name: '根河市', coord: [121.520165, 50.779758], img: 'https://aos-comment.amap.com/B01D600WUL/comment/74AC9427_810D_4FC8_860C_491EA4D277DE_L0_001_2000_1334_1743161951215_90922048.jpg', duration: '起点' }, { name: '额尔古纳湿地景区', coord: [120.148865, 50.2492], img: 'http://store.is.autonavi.com/showpic/d570ed86f5043b3920a418fe7c4b057e', duration: '约 1小时52分钟' }, { name: '莫日格勒河', coord: [119.779039, 49.511658], img: 'http://store.is.autonavi.com/showpic/f1cb1d4a155087f2541aca0414cb3b74', duration: '约 1小时25分钟' }, { name: '海拉尔区', coord: [119.824542, 49.234715], img: 'https://aos-comment.amap.com/B01D600WR7/comment/content_media_external_images_media_1469_1736567111152_79798935.jpg', duration: '约 38 分钟' } ], hotel: { name: '海拉尔贝尔大酒店', address: '胜利大街31号' } },
+                    { day: 7, title: '海拉尔 → 齐齐哈尔', totalDuration: '约 4小时47分钟', color: '#9c27b0', points: [ { name: '海拉尔区', coord: [119.824542, 49.234715], img: 'https://aos-comment.amap.com/B01D600WR7/comment/content_media_external_images_media_1469_1736567111152_79798935.jpg', duration: '起点' }, { name: '齐齐哈尔站', coord: [123.995988, 47.340409], img: 'https://aos-comment.amap.com/B01C400C81/comment/174643715413_1746437170552_05316738.jpg', duration: '约 4小时47分钟' } ], hotel: null }
+                ]
             };
 
-            // Construct URLs
-            const webUrl = `https://www.amap.com/dir?origin=${points['齐齐哈尔'].pos.join(',')}&destination=${points['齐齐哈尔'].pos.join(',')}&waypoints=${points['根河'].pos.join(',')};${points['莫尔道嘎'].pos.join(',')};${points['额尔古纳'].pos.join(',')};${points['满洲里'].pos.join(',')};${points['海拉尔'].pos.join(',')};${points['乌兰浩特'].pos.join(',')}&policy=11&src=mypage&coordinate=gaode&callnative=0`;
-            const appUrl = "amapuri://workInAmap/createWithToken?polymericId=mcp_fd17f11240d64e4ba4438012315555a5&from=MCP";
+            const itineraryContainer = document.getElementById('itinerary-section');
+            finalItinerary.dailyRoutes.forEach(route => {
+                const dayHtml = `
+                <div class="day-container">
+                    <div class="day-header">Day ${route.day}: ${route.title}</div>
+                    <div class="day-summary">
+                        <div class="summary-item">
+                            <span class="summary-item-icon">🕒</span>
+                            <span>当日总计：<strong>${route.totalDuration}</strong></span>
+                        </div>
+                        ${route.hotel ? `
+                        <div class="summary-item">
+                            <span class="summary-item-icon">🏨</span>
+                            <span>推荐住宿：<strong>${route.hotel.name}</strong></span>
+                        </div>` : ''}
+                    </div>
+                    <div class="spot-cards">
+                        ${route.points.map((p, index) => `
+                        <div class="spot-card">
+                            <img src="${p.img || 'https://placehold.co/600x400/dee2e6/6c757d?text=Image+Not+Found'}" alt="${p.name}" class="spot-img">
+                            <div class="spot-info">
+                                <h3 class="spot-name">${index + 1}. ${p.name}</h3>
+                                <p class="spot-meta">车程：${p.duration}</p>
+                            </div>
+                        </div>`).join('')}
+                    </div>
+                </div>`;
+                itineraryContainer.innerHTML += dayHtml;
+            });
 
-            // Set QR Code
+            const appUrl = finalItinerary.exclusiveMapUrl;
             const qrCodeImg = document.getElementById('qr-code-img');
-            qrCodeImg.src = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(webUrl)}`;
+            qrCodeImg.src = `https://api.qrserver.com/v1/create-qr-code/?size=140x140&data=${encodeURIComponent(appUrl)}`;
 
-            // Initialize Map
-            var map = new AMap.Map('container', { zoom: 5, center: [120.5, 49.5], viewMode: '3D', pitch: 30 });
-            for (const key in points) {
-                let p = points[key];
-                new AMap.Marker({ position: p.pos, title: key, map: map, icon: new AMap.Icon({ size: new AMap.Size(24, 24), image: `https://a.amap.com/jsapi_demos/static/demo-center/icons/poi-marker-${p.day}.png`, imageSize: new AMap.Size(24, 24) }) });
-            }
-            const pathData = [ points['齐齐哈尔'].pos, points['根河'].pos, points['莫尔道嘎'].pos, points['额尔古纳'].pos, points['满洲里'].pos, points['海拉尔'].pos, points['乌兰浩特'].pos, points['齐齐哈尔'].pos ];
-            new AMap.Polyline({ path: pathData, isOutline: true, outlineColor: '#ffffff', borderWeight: 2, strokeColor: '#3665ff', strokeWeight: 6, strokeStyle: 'solid', strokeOpacity: 0.8, zIndex: 50, map: map });
+            var map = new AMap.Map('container', { zoom: 6, center: [122, 49], viewMode: '3D', pitch: 25 });
+            const legendContainer = document.getElementById('map-legend');
+
+            finalItinerary.dailyRoutes.forEach(route => {
+                const path = route.points.map(p => p.coord);
+                if (path.length > 1) {
+                    new AMap.Polyline({ path: path, isOutline: true, outlineColor: '#000', borderWeight: 1, strokeColor: route.color, strokeWeight: 8, strokeStyle: 'solid', strokeOpacity: 0.8, zIndex: 50, map: map });
+                }
+                const legendItem = document.createElement('div');
+                legendItem.className = 'legend-item';
+                legendItem.innerHTML = `<div class="legend-color" style="background-color: ${route.color}"></div><span>Day ${route.day}</span>`;
+                legendContainer.appendChild(legendItem);
+
+                let pointCounter = 1;
+                route.points.forEach(p => {
+                    new AMap.Marker({
+                        position: p.coord, title: p.name, map: map,
+                        content: `<div class="custom-marker" style="background-color: ${route.color}">${pointCounter++}</div>`
+                    });
+                });
+            });
+
             map.setFitView();
 
-            // Bind Smart Button Event
             document.getElementById('smart-map-btn').addEventListener('click', function(e) {
                 e.preventDefault();
-                const isMobile = /Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-                if (isMobile) {
-                    window.location.href = appUrl;
-                } else {
-                    window.open(webUrl, '_blank');
-                }
+                window.location.href = appUrl;
             });
         }
     </script>
