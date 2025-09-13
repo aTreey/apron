@@ -84,13 +84,26 @@
             box-shadow: 0 2px 5px rgba(0,0,0,0.4);
         }
         footer { text-align: center; padding: 30px 20px; color: #6c757d; font-size: 0.9rem; }
+        @media (max-width: 768px) {
+            .map-layout-wrapper { flex-direction: column; }
+            .map-sidebar {
+                flex-direction: row;
+                justify-content: space-evenly;
+                align-items: center;
+                padding: 15px;
+            }
+            .map-container { min-height: 50vh; }
+            .map-btn-primary { font-size: 0.9rem; padding: 10px 15px; }
+            #qr-code-img { width: 100px; height: 100px; }
+            .action-label { display: none; } /* Hide labels on mobile to save space */
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <header>
-            <h1>G331呼伦贝尔7日多彩环线游</h1>
-            <p>从鹤城出发，开启一场森林、草原与边境的寻梦之旅</p>
+            <h1>G331阿尔山自驾游</h1>
+            <p>从齐齐哈尔出发，开启一场森林、草原与边境的寻梦之旅</p>
         </header>
 
         <section class="map-section">
@@ -98,12 +111,10 @@
             <div class="map-layout-wrapper">
                 <div class="map-sidebar">
                     <div class="action-group">
-                        <a href="#" class="map-btn-primary" id="smart-map-btn"><span>📍</span> 在App中打开专属地图</a>
-                        <div class="action-label">智能判断设备，打开高德地图</div>
+                        <a href="#" class="map-btn-primary" id="smart-map-btn"><span>📍</span> 在App中打开</a>
                     </div>
                     <div class="qr-code-container">
                         <img id="qr-code-img" src="" alt="地图二维码">
-                        <div class="action-label" style="margin-top: 5px;">手机扫码，体验更佳</div>
                     </div>
                 </div>
                 <div class="map-container-wrapper">
@@ -120,7 +131,7 @@
         </section>
 
         <footer>
-            <p>© 2025 Presentation Agent | 多彩主题</p>
+            <p>© 2025 Presentation Agent </p>
         </footer>
     </div>
 
